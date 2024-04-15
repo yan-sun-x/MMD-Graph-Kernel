@@ -25,3 +25,13 @@ Run the deep version (Deep MMDGK) with a command:
 ```bash
 python main.py --model 'deep'
 ```
+
+## Citation
+```
+@inproceedings{sun2023mmd,
+  title={MMD Graph Kernel: Effective Metric Learning for Graphs via Maximum Mean Discrepancy},
+  author={Sun, Yan and Fan, Jicong},
+  booktitle={The Twelfth International Conference on Learning Representations},
+  year={2023}
+}
+```
