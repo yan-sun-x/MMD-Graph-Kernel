@@ -11,14 +11,15 @@ def arg_parse():
     parser.add_argument('--objective_fuc', '-of', type=str, default="SCL", help='Objective function(KL; SCL; UCL)')
     parser.add_argument('--alpha', '-alpha', type=float, default=1e0, help='Hyper-parameter in objective function')
     parser.add_argument('--normalization', '-norm', type=str, default=None, help='Normalization in GCN')
+    parser.add_argument('--encoder_equal_dim', '-eed', type=bool, default=True, help='Whether GCN has equal dim')
     # 3. MMD
     parser.add_argument('--dis_gamma', '-gamma', type=float, default=1e1, help='MMD->Simi: s = exp(-gamma * d)')
-    parser.add_argument('--bandwidth', '-bd', type=float, default=1e0, help='MMD->Simi: k = exp(-x/bw)')
+    parser.add_argument('--bandwidth', '-bd', type=list, default=[1e0,], help='MMD->Simi: k = exp(-x/bw)')
     # 4. Optimization
     parser.add_argument('--step_size', '-lr', type=float, default=1e-1, help='learning rate')
     parser.add_argument('--weight_decay', '-wd', type=float, default=0., help='weight decay')
     parser.add_argument('--max_norm', '-mn', type=float, default=1e-4, help='max norm')
-    parser.add_argument('--epochs', '-epochs', type=int, default=300, help='Number of epochs')
+    parser.add_argument('--epochs', '-epochs', type=int, default=1, help='Number of epochs')
 
     args = parser.parse_args()
     return args

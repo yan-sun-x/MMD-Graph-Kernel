@@ -1,4 +1,5 @@
 import torch
+import os
 from models import GCNConvVanilla, MMD_GCN, train_one_epoch, validation_stage, test_stage
 from loss import get_graph_metric
 from utils import loadDS, get_graph_idx, eva_clustering, eva_svc
@@ -11,8 +12,10 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def MMDGK(args):
 
-    param_dict = vars(args)
-    dataloader, _, _ = loadDS(args.dataname, batch_size=-1, num_dataloader=1, random_seed=2023) # batch_size = -1 : all data in one batch
+    param_dict = vars(args).copy()
+    param_dict['bandwidth'] = str(args.bandwidth)
+
+    dataloader, _, _ = loadDS(args.dataname, batch_size=-1, num_dataloader=3, random_seed=2023) # batch_size = -1 : all data in one batch
     train_loader = dataloader[0]
     model = GCNConvVanilla()
     timestamp = datetime.now().strftime("Y%m%d_%H%M%S")
@@ -70,21 +73,22 @@ def MMDGK(args):
 
 def deep_MMDGK(args):
 
-    param_dict = vars(args)
-    dataloader, num_features, num_node_attributes = loadDS(args.dataname, batch_size=-1, num_dataloader=1, random_seed=2023) # batch_size = -1 : all data in one batch
+    param_dict = vars(args).copy()
+    param_dict['bandwidth'] = str(args.bandwidth)
+    dataloader, num_features, num_node_attributes = loadDS(args.dataname, batch_size=-1, num_dataloader=3, random_seed=2023) # batch_size = -1 : all data in one batch
     
     if len(dataloader) == 3: 
         train_loader = dataloader[0]
         validation_loader = dataloader[1]
-        test_data = dataloader[2][0]
+        test_loader = dataloader[2]
     elif len(dataloader) == 2:
         train_loader = dataloader[0]
         validation_loader = None 
-        test_data = dataloader[1][0]
+        test_loader = dataloader[1]
     else:
         train_loader = dataloader[0]
         validation_loader = None
-        test_data = None
+        test_loader = None
     
     # select dimensions of layers
     gcn_input_dim = num_node_attributes if args.only_node_attr else num_features
@@ -117,13 +121,17 @@ def deep_MMDGK(args):
             pbar.set_description(f'Epoch {epoch:>3} | Train Loss: {tloss:.4f}')
             writer.add_scalars('Training Loss', {'Training' : tloss}, epoch)
 
-        test_results = test_stage(model, train_loader, test_data, mmd_kernel_list)
-        writer.add_scalars('Scores', test_results, epoch)
-        writer.flush()
+        assert(len(test_loader)==1)
+        for test_data in test_loader:
+            test_results = test_stage(model, train_loader, test_data, mmd_kernel_list)
+            pbar.set_description(f'Epoch {epoch:>3} | {test_results}')
+            writer.add_scalars('Scores', test_results, epoch)
+            writer.flush()
 
         # Track best performance, and save the model's state
         if (vloss < best_vloss) | (epoch==args.epochs):
             best_vloss = vloss
+            if not os.path.isdir('./history/'): os.mkdir('./history/')
             model_path = './history/model_{}_{}_{}'.format(args.dataname, timestamp, epoch)
             torch.save(model.state_dict(), model_path)
 

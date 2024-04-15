@@ -1,7 +1,8 @@
 argparse
 datetime
 numpy
-sklearn
+scikit-learn
 torch
 torch_geometric
 tqdm
+tensorboard

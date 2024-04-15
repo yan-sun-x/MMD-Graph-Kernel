@@ -32,8 +32,7 @@ def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023, ave_num
         if batch_size == -1: batch_size = len(dataset)
         return ((DataLoader(dataset, batch_size=batch_size),), \
                 dataset.num_features, \
-                dataset.num_node_attributes, \
-                dataset.num_classes)
+                dataset.num_node_attributes)
     
     elif num_dataloader == 2:
         
@@ -50,11 +49,11 @@ def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023, ave_num
         vali_dataset = dataset[vali_indices]
 
         train_batch_size = len(train_dataset) if batch_size == -1 else batch_size
-        vali_batch_size = len(vali_dataset) if batch_size == -1 else batch_size
+        vali_batch_size = len(vali_dataset) #if batch_size == -1 else batch_size
         
         return ((DataLoader(train_dataset, batch_size=train_batch_size), \
                 DataLoader(vali_dataset, batch_size=vali_batch_size), \
-                ), dataset.num_features, dataset.num_node_attributes, dataset.num_classes)
+                ), dataset.num_features, dataset.num_node_attributes)
 
     else:
         # Creating data indices for training and validation splits:
@@ -73,7 +72,7 @@ def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023, ave_num
 
         train_batch_size = len(train_dataset) if batch_size == -1 else batch_size
         vali_batch_size = len(vali_dataset) if batch_size == -1 else batch_size
-        test_batch_size = len(test_dataset) if batch_size == -1 else batch_size
+        test_batch_size = len(test_dataset) #if batch_size == -1 else batch_size
         
         return ((DataLoader(train_dataset, batch_size=train_batch_size), \
                 DataLoader(vali_dataset, batch_size=vali_batch_size), \
