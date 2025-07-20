@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from utils import get_graph_idx
+from mmdgk.utils import get_graph_idx
 
 EPS = 1e-6
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

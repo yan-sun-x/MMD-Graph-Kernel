@@ -2,8 +2,8 @@ import torch
 from torch.nn import Linear, Parameter, ModuleList, BatchNorm1d, LayerNorm
 from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import add_self_loops, degree
-from loss import loss_fn, get_graph_metric, get_one_graph_emb
-from utils import get_graph_idx, eva_clustering, eva_svc, train_test_svc
+from mmdgk.loss import loss_fn, get_graph_metric, get_one_graph_emb
+from mmdgk.utils import get_graph_idx, eva_clustering, eva_svc, train_test_svc
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

@@ -1,5 +1,5 @@
-from kernels import MMDGK, deep_MMDGK
-from utils import arg_parse
+from mmdgk.kernels import MMDGK, deep_MMDGK
+from mmdgk.utils import arg_parse
 
 if __name__ == '__main__':
 

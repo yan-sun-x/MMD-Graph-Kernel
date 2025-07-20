@@ -5,12 +5,31 @@
 - **Bugs fixed and results are now reproducible.**
 - 🎉 Accepted as a *spotlight* paper at **ICLR 2024**.
 
+- We public the code. Here is the structure of this project repo:
+```
+MMD-Graph-Kernel/         
+├── mmdgk/                  # Core module package
+│   ├── __init__.py
+│   ├── kernels.py          # MMD kernels
+│   ├── loss.py             # Loss functions used in training
+│   ├── models.py           # GCN Model architecture
+│   └── utils/
+│       ├── __init__.py
+│       ├── arguments.py    # Argument parser
+│       ├── evaluation.py   # Evaluation metrics and functions
+│       └── get_data.py     # Dataset loading and preprocessing
+├── main.py                 # Main training/testing script
+├── run_demo.py
+```
+
 
 ## TL;DR
 
 1. We introduce a class of maximum mean discrepancy (MMD)-based graph kernels, called **MMD-GK**, which apply MMD to node representations propagated via message passing.
 2. Building on this, we propose a class of **deep MMD-GKs** that can adaptively learn implicit graph features in an unsupervised manner.
 3. Additionally, we present **supervised deep MMD-GKs**, which incorporate graph labels to learn more discriminative metrics.
+
+
 
 
 ## 🧪 Usage
@@ -25,12 +44,12 @@ The `data/` folder contains a sample dataset (MUTAG). Configure settings in `uti
 
 To run the vanilla version (MMDGK):
 ```bash
-python main.py --model 'vanilla'
+python main.py --model 'vanilla' --dis_gamma 1e0 --bandwidth "[1e0, 1e1]"
 ```
 
 To run the deep version (Deep MMDGK):
 ```bash
-python main.py --model 'deep'
+python main.py --model 'deep' --dataname 'MUTAG' --epochs 10 
 ```
 
 ## 🐳 Docker Support

@@ -1,8 +1,8 @@
 import torch
 import os
-from models import GCNConvVanilla, MMD_GCN, train_one_epoch, validation_stage, test_stage
-from loss import get_graph_metric
-from utils import loadDS, get_graph_idx, eva_clustering, eva_svc
+from mmdgk.models import GCNConvVanilla, MMD_GCN, train_one_epoch, validation_stage, test_stage
+from mmdgk.loss import get_graph_metric
+from mmdgk.utils import loadDS, get_graph_idx, eva_clustering, eva_svc
 from tqdm import tqdm
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
@@ -20,7 +20,9 @@ def MMDGK(args):
     train_loader = dataloader[0]
     model = GCNConvVanilla()
     timestamp = datetime.now().strftime("Y%m%d_%H%M%S")
-    writer = SummaryWriter('runs_vanilla/{}_trainer_{}'.format(args.dataname, timestamp))
+    log_dir = os.path.join(os.path.abspath(os.getcwd()), "runs_vanilla", "{}_trainer_{}".format(args.dataname, timestamp))
+    os.makedirs(log_dir, exist_ok=True)
+    writer = SummaryWriter(log_dir)
 
     mmd_kernel_list = []
     for data in train_loader:
@@ -102,7 +104,9 @@ def deep_MMDGK(args):
                                 lr=args.step_size,        \
                                 weight_decay=args.weight_decay)
     timestamp = datetime.now().strftime("Y%m%d_%H%M%S")
-    writer = SummaryWriter('runs/{}_trainer_{}'.format(args.dataname, timestamp))
+    log_dir = os.path.join(os.path.abspath(os.getcwd()), "runs", "{}_trainer_{}".format(args.dataname, timestamp))
+    os.makedirs(log_dir, exist_ok=True)
+    writer = SummaryWriter(log_dir)
 
     print('============== Training ==============')
     best_vloss = 1_000_000.
@@ -140,8 +144,8 @@ def deep_MMDGK(args):
         # Track best performance, and save the model's state
         if (vloss < best_vloss) | (epoch==args.epochs):
             best_vloss = vloss
-            if not os.path.isdir('./history/'): os.mkdir('./history/')
-            model_path = './history/model_{}_{}_{}'.format(args.dataname, timestamp, epoch)
+            if not os.path.isdir('../history/'): os.mkdir('../history/')
+            model_path = '../history/model_{}_{}_{}'.format(args.dataname, timestamp, epoch)
             torch.save(model.state_dict(), model_path)
 
         

@@ -1,6 +1,6 @@
-Start time: 2025-07-20 15:56:10
+Start time: 2025-07-20 18:46:41
 Running Vannila MMD Graph Kernel on MUTAG dataset
 {'model': 'vanilla', 'dataname': 'MUTAG', 'only_node_attr': False, 'gcn_num_layer': 2, 'objective_fuc': 'UCL', 'alpha': 1.0, 'normalization': None, 'encoder_equal_dim': True, 'dis_gamma': 1.0, 'bandwidth': '[1.0, 10.0]', 'step_size': 0.1, 'weight_decay': 0.0, 'max_norm': 0.0001, 'epochs': 300}
 Layer   1 | Spectral Clustering: {'train_clu_acc': np.float64(0.7266666666666667), 'train_clu_nmi': 0.16516455930048407, 'train_clu_ari': 0.20044959893420336} | SVC: {'cv_svc_mean': np.float64(0.78), 'cv_svc_std': np.float64(0.0653197264742181)}
 Layer   2 | Spectral Clustering: {'train_clu_acc': np.float64(0.76), 'train_clu_nmi': 0.21151890745880972, 'train_clu_ari': 0.26537035475559695} | SVC: {'cv_svc_mean': np.float64(0.8266666666666668), 'cv_svc_std': np.float64(0.0679869268479038)}
-End time: 2025-07-20 15:56:16
+End time: 2025-07-20 18:46:49
