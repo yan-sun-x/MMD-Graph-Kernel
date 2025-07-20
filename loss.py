@@ -55,7 +55,7 @@ def get_MDD(source, target, bandwidth:list):
         M[:batch_size, :batch_size] = torch.ones(batch_size, batch_size).to(device) / (batch_size*batch_size)
         M[batch_size:, batch_size:] = torch.ones(batch_size_2, batch_size_2).to(device) / (batch_size_2*batch_size_2)
         mmd = torch.trace(kernels @ M)
-        mmd_sup = torch.maximum(torch.clamp(mmd, min=0), mmd_sup)
+        mmd_sup = mmd #torch.maximum(torch.clamp(mmd, min=0), mmd_sup)
 
     return torch.sqrt(mmd_sup + EPS)
 

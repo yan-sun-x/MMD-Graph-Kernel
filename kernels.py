@@ -14,6 +14,7 @@ def MMDGK(args):
 
     param_dict = vars(args).copy()
     param_dict['bandwidth'] = str(args.bandwidth)
+    print(param_dict)
 
     dataloader, _, _ = loadDS(args.dataname, batch_size=-1, num_dataloader=3, random_seed=2023) # batch_size = -1 : all data in one batch
     train_loader = dataloader[0]
@@ -40,7 +41,7 @@ def MMDGK(args):
             # 2. Get the graph index
             graph_idx = get_graph_idx(data)
             # 3. Build MMD graph kernel & Calculate loss
-            mmd_kernel = torch.ones(num_graph, num_graph).cuda()
+            mmd_kernel = torch.ones(num_graph, num_graph).to(device)
             for i in range(num_graph):
                 graph_i = input_x[graph_idx[i]:graph_idx[i+1]]
                 for j in range(i+1, num_graph):
@@ -55,6 +56,7 @@ def MMDGK(args):
             results = eva_clustering(mmd_kernel, label)
             # 4.2: SVC
             results_svc = eva_svc(mmd_kernel, label)
+            print(f'Layer {layer:>3} | Spectral Clustering: {results} | SVC: {results_svc}')
             results.update(results_svc)
             
             writer.add_scalars('Scores', results, layer)
@@ -75,7 +77,7 @@ def deep_MMDGK(args):
 
     param_dict = vars(args).copy()
     param_dict['bandwidth'] = str(args.bandwidth)
-    dataloader, num_features, num_node_attributes = loadDS(args.dataname, batch_size=-1, num_dataloader=3, random_seed=2023) # batch_size = -1 : all data in one batch
+    dataloader, num_features, num_node_attributes = loadDS(args.dataname, batch_size=-1, num_dataloader=2, random_seed=2023) # batch_size = -1 : all data in one batch
     
     if len(dataloader) == 3: 
         train_loader = dataloader[0]
@@ -111,6 +113,7 @@ def deep_MMDGK(args):
         
         model.eval()
         if validation_loader is not None:
+            # Validation stage
             vloss = validation_stage(model, validation_loader)
             pbar.set_description(f'Epoch {epoch:>3} | Train Loss: {tloss:.4f} | Validation Loss: {vloss:.4f}')
             writer.add_scalars('Training vs. Validation Loss',
@@ -123,7 +126,13 @@ def deep_MMDGK(args):
 
         assert(len(test_loader)==1)
         for test_data in test_loader:
+            test_data = test_data.to(device)
+            # Test stage
             test_results = test_stage(model, train_loader, test_data, mmd_kernel_list)
+            print('Evaluate the graph kernel by graph classification accuracy & spectral clustering')
+            print(f'Epoch {epoch:>3} | Test Results: {test_results}')
+            print()
+            # Update the progress bar description and TensorBoard
             pbar.set_description(f'Epoch {epoch:>3} | {test_results}')
             writer.add_scalars('Scores', test_results, epoch)
             writer.flush()
@@ -134,6 +143,8 @@ def deep_MMDGK(args):
             if not os.path.isdir('./history/'): os.mkdir('./history/')
             model_path = './history/model_{}_{}_{}'.format(args.dataname, timestamp, epoch)
             torch.save(model.state_dict(), model_path)
+
+        
 
     writer.add_hparams(param_dict, test_results)
     writer.close()

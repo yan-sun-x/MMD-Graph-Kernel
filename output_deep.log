@@ -1,0 +1,34 @@
+Start time: 2025-07-20 15:56:16
+Running Deep MMD Graph Kernel on MUTAG dataset
+============== Training ==============
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   1 | Test Results: {'train_clu_acc': np.float64(0.7666666666666667), 'train_clu_nmi': 0.21310511579400218, 'train_clu_ari': 0.2789325713232244, 'train_svc_acc': 0.8333333333333334, 'test_svc_acc': 0.868421052631579}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   2 | Test Results: {'train_clu_acc': np.float64(0.7533333333333333), 'train_clu_nmi': 0.19597153311405527, 'train_clu_ari': 0.2514102906253976, 'train_svc_acc': 0.8733333333333333, 'test_svc_acc': 0.9473684210526315}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   3 | Test Results: {'train_clu_acc': np.float64(0.7333333333333333), 'train_clu_nmi': 0.1797204400116223, 'train_clu_ari': 0.2128811259363305, 'train_svc_acc': 0.8733333333333333, 'test_svc_acc': 0.868421052631579}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   4 | Test Results: {'train_clu_acc': np.float64(0.7266666666666667), 'train_clu_nmi': 0.17240948060952976, 'train_clu_ari': 0.2006005675101579, 'train_svc_acc': 0.86, 'test_svc_acc': 0.8947368421052632}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   5 | Test Results: {'train_clu_acc': np.float64(0.72), 'train_clu_nmi': 0.17327738882203123, 'train_clu_ari': 0.18865413564258204, 'train_svc_acc': 0.8533333333333334, 'test_svc_acc': 0.8421052631578947}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   6 | Test Results: {'train_clu_acc': np.float64(0.7333333333333333), 'train_clu_nmi': 0.2063399959962119, 'train_clu_ari': 0.2128811259363305, 'train_svc_acc': 0.8533333333333334, 'test_svc_acc': 0.8421052631578947}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   7 | Test Results: {'train_clu_acc': np.float64(0.72), 'train_clu_nmi': 0.18205509504152764, 'train_clu_ari': 0.18855199710163525, 'train_svc_acc': 0.8133333333333334, 'test_svc_acc': 0.7105263157894737}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   8 | Test Results: {'train_clu_acc': np.float64(0.7133333333333334), 'train_clu_nmi': 0.17512452938916062, 'train_clu_ari': 0.17683343134846044, 'train_svc_acc': 0.82, 'test_svc_acc': 0.7368421052631579}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch   9 | Test Results: {'train_clu_acc': np.float64(0.7133333333333334), 'train_clu_nmi': 0.17512452938916062, 'train_clu_ari': 0.17683343134846044, 'train_svc_acc': 0.82, 'test_svc_acc': 0.7368421052631579}
+
+Evaluate the graph kernel by graph classification accuracy & spectral clustering
+Epoch  10 | Test Results: {'train_clu_acc': np.float64(0.7133333333333334), 'train_clu_nmi': 0.17512452938916062, 'train_clu_ari': 0.17683343134846044, 'train_svc_acc': 0.8333333333333334, 'test_svc_acc': 0.7368421052631579}
+
+End time: 2025-07-20 15:56:59

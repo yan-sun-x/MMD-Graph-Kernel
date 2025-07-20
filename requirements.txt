@@ -2,7 +2,7 @@ argparse
 datetime
 numpy
 scikit-learn
-torch
-torch_geometric
-tqdm
 tensorboard
+torch
+torch-geometric
+tqdm

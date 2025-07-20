@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.log
+*.pyo
+runs/
+runs_vanilla/
+history/
+output_*.log
+.env

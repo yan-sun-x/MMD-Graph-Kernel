@@ -7,7 +7,10 @@ from torch_geometric.datasets import TUDataset
 global_path = "./data"
 
 
-def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023, ave_num_nodes = 10):
+def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023):
+
+    path = osp.join(global_path, DS)
+    dataset = TUDataset(path, name=DS, use_node_attr=True)#.shuffle()
 
     class MyCustomTransform():
         '''
@@ -16,15 +19,10 @@ def loadDS(DS:str, batch_size:int, num_dataloader = 3, random_seed=2023, ave_num
         - data.node_label: Node feature matrix with shape [num_nodes, num_node_label]
         '''
         def __call__(self, data):
-            num_node = int(np.random.normal(ave_num_nodes, 2))
-            data.x = data.x[torch.randint(len(data.x), (num_node,)),:]
-            data.edge_index = torch.from_numpy(np.random.random_integers(0, num_node-1, size=(2, num_node**2//3)))
             data.node_attr = data.x[:, :dataset.num_node_attributes]
             data.node_label = data.x[:, dataset.num_node_attributes:]
             return data
-
-    path = osp.join(global_path, DS)
-    dataset = TUDataset(path, name=DS, use_node_attr=True).shuffle()
+    
     dataset.transform = MyCustomTransform() # add two properties
         
     if num_dataloader == 1:

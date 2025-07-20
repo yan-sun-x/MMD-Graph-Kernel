@@ -1,0 +1,8 @@
+name: mmdgk
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/osx-arm64/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/osx-arm64/
+prefix: /Users/mathilda/miniforge3/envs/mmdgk

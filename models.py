@@ -154,7 +154,7 @@ class MMD_GCN(torch.nn.Module):
         else:
             dim_list = [gcn_input_dim for _ in range(gcn_num_layers+1)]
 
-        self.gcn_list = ModuleList([GCNConv(dim_list[i], dim_list[i+1]).cuda() for i in range(gcn_num_layers)])
+        self.gcn_list = ModuleList([GCNConv(dim_list[i], dim_list[i+1]).to(device) for i in range(gcn_num_layers)])
         if normalization is not None:
             self.normalization = True
             self.bns = ModuleList([torch.nn.BatchNorm1d(dim) for dim in dim_list[1:]])
@@ -239,7 +239,7 @@ def get_train_test_matrix(model, train_data, test_data):
     test_x = test_data.node_attr if model.only_node_attr else test_data.x
     test_emb = model(test_x, test_data.edge_index)
     
-    test_mmd_kernel = torch.ones(test_num_graph, train_num_graph).cuda() # similarty
+    test_mmd_kernel = torch.ones(test_num_graph, train_num_graph).to(device) # similarty
     for i in range(test_num_graph):
         for j in range(train_num_graph):
             graph_i = get_one_graph_emb(test_emb, test_graph_idx[i], test_graph_idx[i+1])
