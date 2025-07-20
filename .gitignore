@@ -1,0 +1,5 @@
+history/
+runs/
+runs_vanilla/
+*.log
+__pycache__/
