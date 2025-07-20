@@ -1,32 +1,74 @@
 # MMD Graph Kernel: Effective Metric Learning for Graphs via Maximum Mean Discrepancy
 
-> Published as a conference paper at *ICLR 2024* as a spotplight paper.
+## 📢 News
+- Docker support is now available (see instructions below).
+- **Bugs fixed and results are now reproducible.**
+- 🎉 Accepted as a *spotlight* paper at **ICLR 2024**.
 
-1. We present a class of maximum mean discrepancy (MMD) based graph kernels, called **MMD-GK**. These kernels are computed by applying MMD to the node representations of two graphs with message-passing propagation. 
-2. Based on this vanilla version, we provide a class of deep MMD-GKs that are able to learn graph kernels and implicit graph features adaptively in an unsupervised manner. 
-3. Apart from that, we propose a class of supervised deep MMD-GKs that are able to utilize label information of graphs and hence yield more discriminative metrics.
 
-## How to Use
+## TL;DR
 
-Remember to install all the dependencies as below.
+1. We introduce a class of maximum mean discrepancy (MMD)-based graph kernels, called **MMD-GK**, which apply MMD to node representations propagated via message passing.
+2. Building on this, we propose a class of **deep MMD-GKs** that can adaptively learn implicit graph features in an unsupervised manner.
+3. Additionally, we present **supervised deep MMD-GKs**, which incorporate graph labels to learn more discriminative metrics.
+
+
+## 🧪 Usage
+
+First, install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-We provide a sample dataset (MUTAG) in the `data` folder. Please configure your settings in `utils/arguments.py`
+The `data/` folder contains a sample dataset (MUTAG). Configure settings in `utils/arguments.py`.
 
-Run the vanilla version (MMDGK) with a command:
+To run the vanilla version (MMDGK):
 ```bash
 python main.py --model 'vanilla'
 ```
 
-Run the deep version (Deep MMDGK) with a command:
+To run the deep version (Deep MMDGK):
 ```bash
 python main.py --model 'deep'
 ```
 
-## Citation
+## 🐳 Docker Support
+
+### Build the image
+  From the project root:
+
+  ```bash
+  docker build -t mmdgk-image .
+  ```
+### Run the container
+  To run the project in the container. This executes `bash run_demo.sh` by default.
+  ```bash
+  docker run --rm mmdgk-image
+  ```
+
+### Optional: Interactive mode
+   To open an interactive shell in the container. From there, you can run bash `run_demo.sh` or directly execute `main.py`.
+  ```bash
+  docker run -it --rm mmdgk-image /bin/bash
+  ```
+  
+
+### Optional: Enable GPU support
+   If you have an NVIDIA GPU and the NVIDIA Container Toolkit installed:
+```bash
+docker run --rm --gpus all mmdgk-image
+```
+### Optional: Save logs or outputs
+   To save logs or outputs to your local machine. This maps the container's `/workspace/runs` directory to your local `./logs` folder.
+  ```bash
+  docker run --rm -v $(pwd)/logs:/workspace/runs mmdgk-image
+  ```
+  
+
+
+## 📖 Citation
+If you use this code, please cite:
 ```
 @inproceedings{sun2023mmd,
   title={MMD Graph Kernel: Effective Metric Learning for Graphs via Maximum Mean Discrepancy},
